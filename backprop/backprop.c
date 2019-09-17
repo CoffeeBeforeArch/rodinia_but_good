@@ -8,6 +8,7 @@
  */
 
 #include "backprop.h"
+#include <assert.h>
 #include <fcntl.h>
 #include <math.h>
 #include <omp.h>
@@ -392,9 +393,9 @@ BPNN *bpnn_read(char *filename) {
 
   printf("Reading '%s'\n", filename);
 
-  read(fd, (char *)&n1, sizeof(int));
-  read(fd, (char *)&n2, sizeof(int));
-  read(fd, (char *)&n3, sizeof(int));
+  assert(read(fd, (char *)&n1, sizeof(int)) >= 0);
+  assert(read(fd, (char *)&n2, sizeof(int)) >= 0);
+  assert(read(fd, (char *)&n3, sizeof(int)) >= 0);
   new = bpnn_internal_create(n1, n2, n3);
 
   printf("'%s' contains a %dx%dx%d network\n", filename, n1, n2, n3);
@@ -402,7 +403,7 @@ BPNN *bpnn_read(char *filename) {
 
   memcnt = 0;
   mem = (char *)malloc((unsigned)((n1 + 1) * (n2 + 1) * sizeof(float)));
-  read(fd, mem, (n1 + 1) * (n2 + 1) * sizeof(float));
+  assert(read(fd, mem, (n1 + 1) * (n2 + 1) * sizeof(float)) >= 0);
   for (i = 0; i <= n1; i++) {
     for (j = 0; j <= n2; j++) {
       fastcopy(&(new->input_weights[i][j]), &mem[memcnt], sizeof(float));
@@ -415,7 +416,7 @@ BPNN *bpnn_read(char *filename) {
 
   memcnt = 0;
   mem = (char *)malloc((unsigned)((n2 + 1) * (n3 + 1) * sizeof(float)));
-  read(fd, mem, (n2 + 1) * (n3 + 1) * sizeof(float));
+  assert(read(fd, mem, (n2 + 1) * (n3 + 1) * sizeof(float)) >= 0);
   for (i = 0; i <= n2; i++) {
     for (j = 0; j <= n3; j++) {
       fastcopy(&(new->hidden_weights[i][j]), &mem[memcnt], sizeof(float));

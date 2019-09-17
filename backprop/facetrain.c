@@ -8,10 +8,11 @@
 
 extern char *strcpy();
 extern void exit();
+void bpnn_train_cuda(BPNN *net, float *eo, float *eh);
 
 int layer_size = 0;
 
-backprop_face() {
+void backprop_face() {
   BPNN *net;
   int i;
   float out_err, hid_err;

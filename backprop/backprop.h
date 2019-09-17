@@ -46,5 +46,6 @@ void bpnn_feedforward();
 
 void bpnn_save();
 BPNN *bpnn_read();
+void load(BPNN *net);
 
 #endif

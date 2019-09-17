@@ -116,7 +116,7 @@ extern "C" void bpnn_train_cuda(BPNN *net, float *eo, float *eh) {
                                             input_hidden_cuda,
                                             hidden_partial_sum, in, hid);
 
-  cudaThreadSynchronize();
+  cudaDeviceSynchronize();
 
   cudaError_t error = cudaGetLastError();
   if (error != cudaSuccess) {
